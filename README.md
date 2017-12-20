@@ -17,7 +17,7 @@ vagrant up
 4. Once the VM is up and running, log into the virtual machine and install the required libraries:
 ```
 > vagrant ssh
-$ cd /vagrant/APP_ROOT
+$ cd /vagrant/APP_ROOT/silex_web
 $ composer install
 ```
 
