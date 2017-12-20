@@ -1,3 +1,5 @@
 .idea
 .vagrant
 APP_ROOT/vendor
+APP_ROOT/silex_web/vendor
+APP_ROOT/silex_api/vendor
