@@ -4,6 +4,18 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
 
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array (
+    'db.options' => array(
+        'driver' => 'pdo_sqlite',
+        'path' => __DIR__ . '/../database/cloud-migration.db'
+    ),
+));
+
+$app->register(
+    new Silex\Provider\TwigServiceProvider(),
+    ['twig.path' => __DIR__ . '/../views']
+);
+
 $app->get(
     '/',
     'Keywords\\Controllers\\NodesController::getAll'
@@ -19,12 +31,7 @@ $app->get(
     'Keywords\\Controllers\\NodesController::getNewForm'
 );
 
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array (
-    'db.options' => array(
-        'driver' => 'pdo_sqlite',
-        'path' => '/vagrant/APP_ROOT/silex_web/database/cloud-migration.db'
-    ),
-));
+
 
 $app->run();
 
