@@ -4,9 +4,20 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
 
-$app->get('/{name}', function($name) use($app) {
-    return 'Hello '.$app->escape($name);
-});
+$app->get(
+    '/',
+    'Keywords\\Controllers\\NodesController::getAll'
+);
+
+$app->get(
+    '/node/new',
+    'Keywords\\Controllers\\NodesController::create'
+);
+
+$app->get(
+    '/node/new',
+    'Keywords\\Controllers\\NodesController::getNewForm'
+);
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array (
     'db.options' => array(
