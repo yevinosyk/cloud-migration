@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use Silex\Application;
+
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array (
@@ -27,7 +29,7 @@ $app->get(
 );
 
 $app->get(
-    '/node/new',
+    '/keywords',
     'Keywords\\Controllers\\NodesController::getNewForm'
 );
 
