@@ -5,5 +5,10 @@
     <body>
     {% block content %}
     {% endblock %}
+    {% if errors is defined %}
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    {% endif %}
     </body>
 </html>

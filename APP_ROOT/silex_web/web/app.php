@@ -23,8 +23,8 @@ $app->get(
     'Keywords\\Controllers\\NodesController::getAll'
 );
 
-$app->get(
-    '/node/new',
+$app->post(
+    '/keywords',
     'Keywords\\Controllers\\NodesController::create'
 );
 
