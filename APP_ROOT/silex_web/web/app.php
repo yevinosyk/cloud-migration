@@ -3,24 +3,50 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Silex\Application;
+use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\LocaleServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
+use Symfony\Component\Form\FormRenderer;
+use Keywords\Controllers\NodesController;
 
-$app = new Silex\Application();
+$app = new Application();
 
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array (
+$app->register(new DoctrineServiceProvider(), array (
     'db.options' => array(
         'driver' => 'pdo_sqlite',
-        'path' => __DIR__ . '/../database/cloud-migration.db'
+        // 'path' => __DIR__ . '/../database/cloud-migration.db'
+        'path' => '/var/tmp/db'
     ),
 ));
 
+$app->register(new ServiceControllerServiceProvider());
+$app->register(new FormServiceProvider());
+$app->register(new LocaleServiceProvider());
+$app->register(new TranslationServiceProvider(), array('translator.domains' => array()));
+
+$app['debug'] = true;
+
+$app['keywords.controller'] = function() use ($app) {
+    return new NodesController();
+};
+
 $app->register(
-    new Silex\Provider\TwigServiceProvider(),
+    new TwigServiceProvider(),
     ['twig.path' => __DIR__ . '/../views']
 );
 
+$app->extend('twig.runtimes', function ($runtimes, $app) {
+    return array_merge($runtimes, [
+        FormRenderer::class => 'twig.form.renderer',
+    ]);
+});
+
 $app->get(
     '/',
-    'Keywords\\Controllers\\NodesController::getAll'
+    'keywords.controller:getAll'
 );
 
 $app->post(
@@ -32,8 +58,6 @@ $app->get(
     '/keywords',
     'Keywords\\Controllers\\NodesController::getNewForm'
 );
-
-
 
 $app->run();
 

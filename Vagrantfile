@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Install all required software
   config.vm.provision "shell", inline: "apt-get update; apt-get upgrade -y"
-  config.vm.provision "shell", inline: "apt-get install -y nginx php-fpm php-zip"
+  config.vm.provision "shell", inline: "apt-get install -y nginx php-fpm php-zip php-xml php-sqlite3"
 
   # Config PHP-FPM and NGINX
   config.vm.provision "shell", inline: "cp /vagrant/install/nginx_vhost_silex.conf /etc/nginx/sites-enabled/default; cp /vagrant/install/php_fpm_pool.conf /etc/php/7.0/fpm/pool.d/www.conf; service nginx restart; service php7.0-fpm restart"

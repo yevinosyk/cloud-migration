@@ -2,10 +2,9 @@
 
 {% block content %}
     <h1>Add a new keyword:</h1>
+
     <form method="post">
-        <div>
-            <input type="text" name="node" value="{{ node is defined ? node : '' }}" /> 
-        </div>
+        {{ form_widget(form) }}
         <div>
             <button type="submit">Add!</button>
         </div>
