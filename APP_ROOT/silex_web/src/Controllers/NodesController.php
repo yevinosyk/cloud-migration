@@ -55,7 +55,10 @@
 
         private function getForm($app) {
             return $form = $app['form.factory']->createBuilder(FormType::class, null)
-                ->add('node')
+                ->add('node', null, array(
+                    'label' => false,
+                    'attr' => array('class'=>'form-control form-control-lg')
+                ))
                 ->getForm();
         }
 
