@@ -1,12 +1,12 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-    <h1>Node List</h1>
+    <h1>All the keywords</h1>
     {% for node in nodes %}
         <div>
             <h2>{{ node.node }}</h2>
         </div>
     {% endfor %}
 
-    <a href="/keywords">Create New</a>
+    <a href="/keywords">Add New</a>
 {% endblock %}
