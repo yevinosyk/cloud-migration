@@ -6,7 +6,8 @@
         "symfony/form": "^3.4",
         "symfony/twig-bridge": "^3.4",
         "symfony/validator": "^3.4",
-        "symfony/config": "^3.4"
+        "symfony/config": "^3.4",
+        "symfony/intl": "^3.4"
     },
     "autoload": {
         "psr-4": {"Keywords\\": "src/"}
