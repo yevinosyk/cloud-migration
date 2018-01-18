@@ -11,6 +11,7 @@ use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\Form\FormRenderer;
 use Keywords\Controllers\NodesController;
+use Symfony\Component\Asset\Package;
 
 $app = new Application();
 
@@ -23,11 +24,9 @@ $app->register(new DoctrineServiceProvider(), array (
 ));
 
 $app->register(new Silex\Provider\AssetServiceProvider(), array(
-    'assets.version' => 'v1',
-    'assets.version_format' => '%s?version=%s',
     'assets.named_packages' => array(
-        'css' => array('version' => 'css3', 'base_path' => '/../css'),
-        'images' => array('base_path' => '/../img'),
+        'css' => array('version' => 'css3', 'base_path' => '/css'),
+        'images' => array('base_path' => '/img'),
     ),
 ));
 
