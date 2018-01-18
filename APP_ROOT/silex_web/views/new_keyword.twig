@@ -1,12 +1,25 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-    <h1>Add a new keyword:</h1>
-
-    <form method="post">
-        {{ form_widget(form) }}
-        <div>
-            <button type="submit">Add!</button>
+<div class="new_keyword text-white text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5">Add a new keyword:</h1>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <div class="form-row">
+                    <div class="col-12 col-md-9 mb-2 mb-md-0">
+                        <form method="post">
+                            {{ form_widget(form) }}
+                        </form>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">Add!</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+</div>
 {% endblock %}
