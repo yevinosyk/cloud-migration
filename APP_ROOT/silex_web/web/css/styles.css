@@ -6,7 +6,7 @@ h1 {
     font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-size: 400%;
 }
-.new_keyword {
+.new_keyword, .get_all {
     position: relative;
     padding-top: 8rem;
 }
