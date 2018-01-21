@@ -3,17 +3,13 @@
 {% block content %}
 <div class="new_keyword text-white text-center">
     <div class="container">
-        <div class="">
-            <div class="col-xl-9 mx-auto">
-                <h1 class="mb-5">Add a new keyword:</h1>
-            </div>
-            <div class="">
-                <form method="post">
-                    {{ form_widget(form) }}
-                    <button type="button" class="btn btn-outline-secondary" style="margin-top:10px;">Add!</button>
-                </form>  
-            </div>
+        <div class="col-xl-9 mx-auto">
+            <h1 class="mb-5">Add a new keyword:</h1>
         </div>
+        <form method="post">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-outline-secondary" style="margin-top:10px;">Add!</button>
+        </form>  
     </div>
 </div>
 {% endblock %}
