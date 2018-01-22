@@ -67,5 +67,13 @@ $app->get(
     'Keywords\\Controllers\\NodesController::getNewForm'
 );
 
+$app->post('/node/{id}/create_link', 'Keywords\\Controllers\\NodesController::createLink', function($id){
+    $id = node.id;
+});
+
+$app->get('/node/{id}/create_link', 'Keywords\\Controllers\\NodesController::newLinkForm', function($is){
+    $id = node.id;
+});
+
 $app->run();
 
