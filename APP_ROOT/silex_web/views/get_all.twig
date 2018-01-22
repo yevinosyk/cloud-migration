@@ -4,16 +4,14 @@
     <div class="text-white text-center get_all">
         <div class="container">
             <h1>All the keywords</h1>
-            <div class="center">
-                {% for node in nodes %}
-                <div>
-                    <h5 style="display:inline-block;">{{ node.node }}</h5>
-                    <a href="" class="btn btn-outline-secondary btn-sm" style="padding: 0rem 0.5rem;">Link it!</a>
-                </div>
-                {% endfor %}
-                <div class="col-xs-12">
-                    <a href="/keywords" class="btn btn-outline-secondary btn-lg" style="margin-top:20px;">Add New</a>
-                </div>
+            {% for node in nodes %}
+            <div>
+                <span class="node_name">{{ node.node }}</span> 
+                <a href="/node/{{ node.id }}/create_link" class="btn btn-outline-secondary btn-sm">Link it!</a>
+            </div>
+            {% endfor %}
+            <div class="col-xs-12">
+                <a href="/keywords" class="btn btn-outline-secondary btn-lg">Add New</a>
             </div>
         </div>
     </div>
