@@ -7,6 +7,7 @@
     use Symfony\Component\Form\FormError;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Form\Extension\Core\Type\FormType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
     class NodesController {
 
@@ -27,7 +28,7 @@
         }
 
         public function newLinkForm(Application $app): string {
-            $form = $this->getForm($app);
+            $form = $this->getLinkForm($app);
 
             return $app['twig']->render('new_link.twig', array('form' => $form->createView()));
         }
@@ -59,6 +60,27 @@
             return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
         }
 
+        public function createLink(Application $app, Request $request): string {
+            $this->checkSchema($app);
+
+            $form = $this->getLinkForm($app);
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+                $data = $form->getData();
+
+                //add links to links table
+
+                $sql = 'INSERT INTO nodes(links) VALUES (:node_1, :node_2) AND INSERT INTO nodes(links) VALUES (:node_2, :node_1)';
+                $result = $app['db']->executeUpdate($sql, array('links' => $data['links']));
+
+                return $app->redirect('/');
+            }
+
+            return $app['twig']->render('new_link.twig', array('form' => $form->createView()));
+        }
+
         private function getForm($app) {
             return $form = $app['form.factory']->createBuilder(FormType::class, null)
                 ->add('node', null, array(
@@ -66,6 +88,16 @@
                     'attr' => array('class'=>'form-control form-control-lg')
                 ))
                 ->getForm();
+        }
+
+        private function getLinkForm($app) {
+            return $form = $app['form.factory']->createBuilder(FormType::class, null)
+                ->add('links', ChoiceType::class, array(
+                    'label' => false,
+                    //choises are existing nodes ...
+                    'choices' => array()
+                ))
+                ->getLinkForm();
         }
 
         private function checkSchema($app)
