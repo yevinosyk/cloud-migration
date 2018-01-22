@@ -26,6 +26,12 @@
             return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
         }
 
+        public function newLinkForm(Application $app): string {
+            $form = $this->getForm($app);
+
+            return $app['twig']->render('new_link.twig', array('form' => $form->createView()));
+        }
+
         public function create(Application $app, Request $request): string {
             $this->checkSchema($app);
 
