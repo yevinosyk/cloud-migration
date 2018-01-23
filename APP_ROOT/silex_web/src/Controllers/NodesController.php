@@ -90,14 +90,29 @@
                 ->getForm();
         }
 
-        private function getLinkForm($app) {
+        private function getLinkForm($app, $id) {
+            if ($id) {
+                $this->checkSchema($app);
+        
+                $sql = 'SELECT * FROM nodes';
+        
+                $nodes = $app['db']->fetchAll($sql);
+        
+                $choices = array();
+                foreach ($nodes as $node) {
+                    if ($node['id'] != $id) {
+                        $choices[$node['id']] = $node['node'];
+                    }
+                }
+            }
+        
             return $form = $app['form.factory']->createBuilder(FormType::class, null)
                 ->add('links', ChoiceType::class, array(
                     'label' => false,
                     //choises are existing nodes ...
-                    'choices' => array()
+                    'choices' => $choices
                 ))
-                ->getLinkForm();
+                ->getForm();
         }
 
         private function checkSchema($app)
