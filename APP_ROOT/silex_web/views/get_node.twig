@@ -3,7 +3,7 @@
 {% block content %}
     <div class="text-white text-center get_all">
         <div class="container">
-            <h1>{{ node.node }}</h1>
+            <h1>{{ node.node }} is linked to:</h1>
             {% for link in links %}
             <div>
                 <span class="node_name"><a href="/node/{{ link.id }}">{{ link.node }}</a></span>
