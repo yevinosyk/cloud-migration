@@ -119,17 +119,35 @@
             if ($form->isValid()){
                 $data = $form->getData();
 
-                /** TODO check if the node already exists and don't insert it again (using $existingLinks) */
-                if(!$existingLinks){
-                    foreach ($data['links'] as $linkId) {
+                /** Deal with new links */
+                foreach ($data['links'] as $linkId) {
+                    $found = false;
+                    foreach ($existingLinks as $link) {
+                        if ($link['id'] == $linkId) {
+                            $found = true;
+                        }
+                    }
+                    // if found is false, it is new in the form, but not in the DB
+                    if (!$found) {
                         $sql = 'INSERT INTO links VALUES (null, :node_1, :node_2)';
                         $result = $app['db']->executeUpdate($sql, array('node_1' => $linkId, 'node_2' => $id));
                         $result = $app['db']->executeUpdate($sql, array('node_1' => $id, 'node_2' => $linkId));
                     }
                 }
-
-                /** TODO once new links have been added, "old" links must be removed */
-
+                /** Deal with removed links */
+                foreach ($existingLinks as $link) {
+                    $found = false;
+                    foreach ($data['links'] as $linkId) {
+                        if ($link['id'] == $linkId) {
+                            $found = true;
+                        }
+                    }
+                    // if found is false, it was not in the form, but in the DB, so must be removed
+                    if (!$found) {
+                        $sql = 'DELETE FROM links WHERE (node_1=:id and node_2=:linkid) OR (node_1=:linkid and node_2=:id)';
+                        $result = $app['db']->executeUpdate($sql, array('id' => $id, 'linkid' => $link['id']));
+                    }
+                }
 
                 return $app->redirect('/');
             }
