@@ -120,10 +120,12 @@
                 $data = $form->getData();
 
                 /** TODO check if the node already exists and don't insert it again (using $existingLinks) */
-                foreach ($data['links'] as $linkId) {
-                    $sql = 'INSERT INTO links VALUES (null, :node_1, :node_2)';
-                    $result = $app['db']->executeUpdate($sql, array('node_1' => $linkId, 'node_2' => $id));
-                    $result = $app['db']->executeUpdate($sql, array('node_1' => $id, 'node_2' => $linkId));
+                if(!$existingLinks){
+                    foreach ($data['links'] as $linkId) {
+                        $sql = 'INSERT INTO links VALUES (null, :node_1, :node_2)';
+                        $result = $app['db']->executeUpdate($sql, array('node_1' => $linkId, 'node_2' => $id));
+                        $result = $app['db']->executeUpdate($sql, array('node_1' => $id, 'node_2' => $linkId));
+                    }
                 }
 
                 /** TODO once new links have been added, "old" links must be removed */
