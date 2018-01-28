@@ -1,0 +1,18 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="text-white text-center get_all">
+        <div class="container">
+            <h1>All the keywords</h1>
+            {% for node in nodes %}
+            <div>
+                <h5 class="node_name"><a href="/node/{{ node.id }}" class="node_name">{{ node.node }}</a></h5>
+                <a href="/node/{{ node.id }}/create_link" class="link_it">Link it!</a>
+            </div>
+            {% endfor %}
+            <div class="col-xs-12">
+                <a href="/keywords" class="btn btn-outline-secondary btn-lg add_new">Add New</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
