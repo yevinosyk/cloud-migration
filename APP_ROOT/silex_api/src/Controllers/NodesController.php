@@ -20,7 +20,7 @@
 
             $nodes = $app['db']->fetchAll($sql);
 
-            return $app['twig']->render('get_all.twig', array('nodes' => $nodes));
+            return new JsonResponse($nodes);
         }
 
         /**
@@ -39,38 +39,12 @@
                 throw new \Exception('this is not the node you are looking for');
             }
             /** also retrieve the links to this node to complete the picture */
-            $links = $this->getNodeLinks($app, $node);
+            $node['links'] = $this->getNodeLinks($app, $node);
 
-            return $app['twig']->render('get_node.twig', array('node' => $node, 'links' => $links));
+            return new JsonResponse($node);
         }
 
-        public function getNewForm(Application $app): string {
-            $form = $this->getForm($app);
-
-            return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
-        }
-
-        /**
-         * Generate new form for linking a node
-         *
-         * @param Application $app
-         * @param $id
-         * @return string
-         * @throws \Exception]
-         */
-        public function newLinkForm(Application $app, $id): string {
-            $node = $this->getNodeById($app, $id);
-
-            if (!$node) {
-                throw new \Exception('The node you are trying to link to does not exist');
-            }
-
-            $form = $this->getLinkForm($app, $node);
-
-            return $app['twig']->render('new_link.twig', array('form' => $form->createView(), 'node' => $node));
-        }
-
-        public function create(Application $app, Request $request): string {
+        public function postNode(Application $app, Request $request): string {
             $this->checkSchema($app);
 
             $form = $this->getForm($app);
@@ -94,8 +68,7 @@
                 return $app->redirect('/');
             }
 
-            //return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
-            return new JsonResponse($app['twig']->render('new_keyword.twig', array('form' => $form->createView())));
+            return new JsonResponse($form->getErrors(true, true));
         }
 
         /**
@@ -155,7 +128,7 @@
                 return $app->redirect('/');
             }
 
-            return $app['twig']->render('new_link.twig', array('form' => $form->createView()));
+            return new JsonResponse($form->getErrors(true, true));
         }
 
         private function getForm($app) {

@@ -4,14 +4,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
-use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\LocaleServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\Form\FormRenderer;
 use Keywords\Controllers\NodesController;
-use Symfony\Component\Asset\Package;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,12 +31,6 @@ $app->register(new DoctrineServiceProvider(), array (
     ),
 ));
 
-$app->register(new Silex\Provider\AssetServiceProvider(), array(
-    'assets.named_packages' => array(
-        'css' => array('version' => 'css3', 'base_path' => '/css'),
-        'images' => array('base_path' => '/img'),
-    ),
-));
 
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new FormServiceProvider());
@@ -51,46 +43,42 @@ $app['keywords.controller'] = function() use ($app) {
     return new NodesController();
 };
 
-$app->register(
-    new TwigServiceProvider(),
-    ['twig.path' => __DIR__ . '/../views']
-);
-
-$app->extend('twig.runtimes', function ($runtimes, $app) {
-    return array_merge($runtimes, [
-        FormRenderer::class => 'twig.form.renderer',
-    ]);
-});
-
+// gets all nodes
 $app->get(
-    '/',
+    '/node',
     'keywords.controller:getAll'
 );
 
+// gets a single node by ID
 $app->get(
     '/node/{id}',
     'keywords.controller:getNode'
 );
 
+// creates a new new node
 $app->post(
-    '/keywords',
-    'Keywords\\Controllers\\NodesController::create'
+    '/node',
+    'keywords.controller:postNode'
 );
 
-$app->get(
-    '/keywords',
-    'Keywords\\Controllers\\NodesController::getNewForm'
+// updates a node by id
+$app->put(
+    '/node/{id}',
+    'keywords.controller:putNode'
 );
 
-$app->get(
-    '/node/{id}/create_link',
-    'Keywords\\Controllers\\NodesController::newLinkForm'
+// deletes a node by id
+$app->delete(
+    '/node/{id}',
+    'keywords.controller:deleteNode'
 );
 
+// creates a new node link to given id
 $app->post(
     '/node/{id}/create_link',
-    'Keywords\\Controllers\\NodesController::createLink'
+    'keywords.controller:createLink'
 );
+
 
 $app->run();
 
