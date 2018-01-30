@@ -10,3 +10,15 @@ h1 {
     position: relative;
     padding-top: 8rem;
 }
+.node_name {
+    display:inline;
+    color: #ffffff;
+    margin: 5px;
+}
+.link_it {
+    color: #868e96;
+    font-size: 90%;
+}
+.add_new {
+    margin-top: 20px;
+}
