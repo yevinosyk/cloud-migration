@@ -6,6 +6,8 @@
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\FormError;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\Form\Extension\Core\Type\FormType;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -92,7 +94,8 @@
                 return $app->redirect('/');
             }
 
-            return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
+            //return $app['twig']->render('new_keyword.twig', array('form' => $form->createView()));
+            return new JsonResponse($app['twig']->render('new_keyword.twig', array('form' => $form->createView())));
         }
 
         /**

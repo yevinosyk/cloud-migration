@@ -12,8 +12,18 @@ use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\Form\FormRenderer;
 use Keywords\Controllers\NodesController;
 use Symfony\Component\Asset\Package;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 $app = new Application();
+
+$app->before(function (Request $request) {
+    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace(is_array($data) ? $data : array());
+    }
+});
 
 $app->register(new DoctrineServiceProvider(), array (
     'db.options' => array(
