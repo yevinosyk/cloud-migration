@@ -45,7 +45,7 @@ $app['keywords.controller'] = function() use ($app) {
 
 // gets all nodes
 $app->get(
-    '/node',
+    '/',
     'keywords.controller:getAll'
 );
 
