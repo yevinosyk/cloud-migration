@@ -14,13 +14,14 @@
     class NodesController {
 
         public function getAll(Application $app): string {
-            $this->checkSchema($app);
+            /*$this->checkSchema($app);
 
             $sql = 'SELECT * FROM nodes';
 
             $nodes = $app['db']->fetchAll($sql);
 
-            return new JsonResponse($nodes);
+            return new JsonResponse($nodes);*/
+            echo "I am working!!!";
         }
 
         /**

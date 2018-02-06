@@ -48,7 +48,7 @@ $app->get(
     '/',
     'keywords.controller:getAll'
 );
-
+/*
 // gets a single node by ID
 $app->get(
     '/node/{id}',
@@ -77,7 +77,8 @@ $app->delete(
 $app->post(
     '/node/{id}/create_link',
     'keywords.controller:createLink'
-);
+);*/
+
 
 
 $app->run();
